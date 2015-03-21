@@ -22,7 +22,7 @@
     <meta property="og:description" content='In the past few years, I have become fascinated with the Internet of Things. The idea that devices can be connected and interact with one another across a wireless network. According to Wikipedia, the internet of things (IoT) is: " the...'>
     <meta property="og:url" content="http://localhost:2368/controlling-hue-bulbs-with-your-mobile-device/">
     <meta property="article:published_time" content="2015-03-21T20:51:08.532Z">
-    <meta property="article:modified_time" content="2015-03-21T20:51:08.530Z">
+    <meta property="article:modified_time" content="2015-03-21T23:06:42.696Z">
     
     <meta name="twitter:card" content="summary">
     <meta name="twitter:title" content="Controlling Hue Bulbs With Your Mobile Device">
@@ -43,7 +43,7 @@
     "headline": "Controlling Hue Bulbs With Your Mobile Device",
     "url": "http://localhost:2368/controlling-hue-bulbs-with-your-mobile-device/",
     "datePublished": "2015-03-21T20:51:08.532Z",
-    "dateModified": "2015-03-21T20:51:08.530Z",
+    "dateModified": "2015-03-21T23:06:42.696Z",
     "description": "In the past few years, I have become fascinated with the Internet of Things. The idea that devices can be connected and interact with one another across a wireless network. According to Wikipedia, the internet of things (IoT) is: &quot; the..."
 }
     </script>
@@ -81,7 +81,7 @@
 
 <p>Nevertheless, During my time at the Turing School of Software and Design, I had the opportunitiy to take an elective about Hue Bulbs. Hue Bulbs are wireless led light bulbs manufactured by Phillips. After spending a few weeks learning about how these work. I decided to tap into the IoT and put my hacking, api, and rails skills to the test. The end goal was a simple app that will allow you to control the Hue Bulbs with your mobile device.</p>
 
-<p>For the App I used Twilio, Ruby on Rails, the 'Hue' gem and ngrok. The overall setup time for the app was about 2 hours. Below is an outline of the steps I took to create the app. </p>
+<p>For this project I used Twilio, Ruby on Rails, the 'Hue' gem and ngrok. The overall setup time was about 2 hours. Below is an outline of the steps I took to create the app. </p>
 
 <ul>
 <li><p>I started by generating a new rails application which I named HueBulbApp.</p></li>
@@ -91,10 +91,10 @@
 <li><p>The next step was to set up a ruby class that contains the code for connecting with the Hue Bulbs. I named this 'HueHandler' as its job was to handle all of the communication with the hue bulbs. I set up a method called 'response' that accepted the information from the sms as a parameter. Based on that information, the response method would then give a command to the hue bulbs. </p></li>
 <li><p>Its important to note that because of the sometimes intermittent wireless connection, it was important to rescue any connection errors when trying to connect with the hue bulbs. Without doing this, the app would break immediately if it was unable to connect to the bulb router. </p></li>
 <li><p>I then setup the create action of the twilio controller to call the HueHandler Response method passing in the params which is the infromation coming in from the sms message via Twilio. </p></li>
-<li><p>Lastly, because there is no user interface on the application side, I used Ngrok to expose my app to the web in order recieve the information coming in from Twilio as oppsed to using a cloud application platform such as Heroku. </p></li>
+<li><p>Lastly, because this is a small sample app, I used Ngrok to expose my app to the web in order recieve the information coming in from Twilio as oppsed to using a cloud application platform such as Heroku. </p></li>
 <li><p>In the end, the HueBulbApp was capable of communicating with Hue bulbs in 2 ways: </p>
 
-<ol><li>Turning the bulbs on and off by texting "on"  or "off" text to the twilio number </li>
+<ol><li>Turning the bulbs on and off by texting "on"  or "off" to the twilio number </li>
 <li>Changing the bulb hue, i.e. turing the color to green, pink or blue by texting "Pink", "Blue", or "Green".</li></ol></li>
 <li><p>All of the code can be found at: <a href="https://github.com/scottalexandra/HueBulpApp">https://github.com/scottalexandra/HueBulpApp</a></p></li>
 </ul>
