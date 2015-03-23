@@ -662,12 +662,11 @@ margin on the iframe, cause it breaks stuff. */
 /* The details of your blog. Defined in ghost/settings/ */
 .page-title {
     margin: 10px 0 10px 0;
-    margin-bottom: 30px;
     font-size: 5rem;
     letter-spacing: -1px;
     font-weight: 700;
     font-family: "Open Sans", sans-serif;
-    color: gray;
+    color: #fff;
 }
 
 .page-description {
@@ -675,10 +674,9 @@ margin on the iframe, cause it breaks stuff. */
     font-size: 2rem;
     line-height: 1.5em;
     font-weight: 400;
-    font-family: "Bangers";
+    font-family: "Merriweather", serif;
     letter-spacing: 0.01rem;
-    color: gray;
-    border-color: gray;
+    color: rgba(255,255,255,0.8);
 }
 
 .no-cover.main-header {
