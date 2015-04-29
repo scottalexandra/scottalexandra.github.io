@@ -1,0 +1,125 @@
+<rss xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:content="http://purl.org/rss/1.0/modules/content/" xmlns:atom="http://www.w3.org/2005/Atom" version="2.0"><channel><title>Learn-as-you-go</title><description>Explore. Learn. Do</description><link>http://localhost:2368/</link><generator>Ghost 0.5</generator><lastBuildDate>Wed, 29 Apr 2015 19:12:08 GMT</lastBuildDate><atom:link href="http://localhost:2368/rss/" rel="self" type="application/rss+xml"/><ttl>60</ttl><item><title>Controlling Hue Bulbs With Your Mobile Device</title><description>&lt;p&gt;In the past few years, I have become fascinated with the Internet of Things. The idea that devices can be connected and interact with one another across a wireless network. According to Wikipedia, the internet of things (IoT) is:  &lt;/p&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;" the network of physical objects or "things" embedded with electronics, software, sensors and connectivity to enable it to achieve greater value and service by exchanging data with the manufacturer, operator and/or other connected devices." &lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;With this capability, the possibilites are endless! I'll admit, while this is incredibly awesome, when it comes to thinking about the security and personal privacy challenges this creates, this is a little scary!&lt;/p&gt;
+
+&lt;p&gt;Nevertheless, In order to feed my curiosity for the internet of things, I built an app to control wireless LED lightbulbs with my iPhone.&lt;/p&gt;
+
+&lt;p&gt;For this project I used: &lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;Twilio, &lt;/li&gt;
+&lt;li&gt;Ruby on Rails, &lt;/li&gt;
+&lt;li&gt;The 'Hue' gem&lt;/li&gt;
+&lt;li&gt;Ngrok&lt;/li&gt;
+&lt;li&gt;My iPhone&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;The overall setup time was about 2 hours. Below is an outline of the steps I took to create the app. &lt;/p&gt;
+
+&lt;p&gt;I started by generating a new rails application from the terminal which I named HueBulbApp.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;Rails New HueBulbApp  
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Next I added the Hue gem in the gemfile  &lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;gem 'hue'  
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;I then created a controller from the terminal called 'Twilio' &lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;Rails generate controller Twilio  
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Next I made a create action within the controller. &lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;class TwilioController &amp;lt; ApplicationController  
+  def create
+  end
+end  
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Inside of config/routes.rb I set up a route that will allow Twilio to post information to the create action on this Controller. &lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;resources :twilio, only: [:create]  
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;After configuring my rails app, I set up a &lt;a href="https://www.twilio.com/" title="twilio"&gt;twilio&lt;/a&gt; account. As part of this setup, I generated a phone number that would send an HTTP Post request via sms to my app route.&lt;/p&gt;
+
+&lt;p&gt;The next step was to set up a plain old ruby class that contains the code for connecting with the Hue Bulbs.  &lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;class HueHandler  
+end  
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;I named this 'HueHandler' as its job was to handle all of the communication with the hue bulbs. &lt;/p&gt;
+
+&lt;p&gt;I set up a method called 'response' that accepts the information from the sms as a parameter. Based on that information, the response method gives a command to the hue bulbs. &lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;class HueHandler  
+  def self.response(body)
+  lights = client.lights[7]
+  client.lights.each do |light|
+      case
+      when body == "On"
+        light.on = true
+      when body == "Off"
+        light.on = false
+      when body == "Pink"
+        light.hue = 56100
+      when body == "Green"
+        light.hue = 36210
+      when body == "Red"
+        light.hue == 65280
+      end
+    end
+  end    
+end  
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Its important to note that because of sometimes intermittent wireless connections, it is important to rescue any connection errors when trying to connect with the hue bulbs.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;class HueHandler  
+  def self.response(body)
+    begin
+      client = Hue::Client.new
+    rescue Hue::NoBridgeFound
+      retry
+    end
+    lights = client.lights[7]
+  client.lights.each do |light|
+      case
+      when body == "On"
+        light.on = true
+      when body == "Off"
+        light.on = false
+      when body == "Pink"
+        light.hue = 56100
+      when body == "Green"
+        light.hue = 36210
+      when body == "Red"
+        light.hue == 65280
+      end
+    end
+  end
+end  
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;I then setup the create action of the twilio controller to call the HueHandler Response method passing in the infromation coming in from the sms message via Twilio.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;class TwilioController &amp;lt; ApplicationController  
+  def create
+    HueHandler.response(params[:Body])
+  end
+end  
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Lastly, because this is a small sample app, I used &lt;a href="https://ngrok.com/" title="ngrok"&gt;ngrok&lt;/a&gt; to expose my app to the web in order recieve the information coming in from Twilio as oppsed to using a cloud application platform such as Heroku. &lt;/p&gt;
+
+&lt;p&gt;After only a few hours, I was able to turn the lights on, off, and change the hue by texting "on", "off", "pink" "green", and "red".&lt;/p&gt;
+
+&lt;p&gt;All of the code can be found at: &lt;a href="https://github.com/scottalexandra/HueBulpApp"&gt;https://github.com/scottalexandra/HueBulpApp&lt;/a&gt;&lt;/p&gt;</description><link>http://localhost:2368/controlling-hue-bulbs-with-your-mobile-device/</link><guid isPermaLink="false">fb504b1d-7310-4b82-a517-a77e6bc43cd5</guid><dc:creator>Alexandra Robinson</dc:creator><pubDate>Sat, 21 Mar 2015 20:51:08 GMT</pubDate></item></channel></rss>
