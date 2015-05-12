@@ -11,29 +11,29 @@
 
     <link rel="shortcut icon" href="../favicon.ico">
 
-    <link rel="stylesheet" type="text/css" href="../assets/css/screen.css?v=1a474d6cfc">
+    <link rel="stylesheet" type="text/css" href="../assets/css/screen.css?v=b702be1f6f">
     <link rel="stylesheet" type="text/css" href="http://fonts.googleapis.com/css?family=Merriweather:300,700,700italic,300italic%7COpen+Sans:700,400">
 
     <link rel="canonical" href="http://localhost:2368/controlling-hue-bulbs-with-your-mobile-device/">
     
-    <meta property="og:site_name" content="Electro-Mechanical Musings">
+    <meta property="og:site_name" content="Learn-as-you-go">
     <meta property="og:type" content="article">
     <meta property="og:title" content="Controlling Hue Bulbs With Your Mobile Device">
-    <meta property="og:description" content='In the past few years, I have become fascinated with the Internet of Things. The idea that devices can be connected and interact with one another across a wireless network. According to Wikipedia, the internet of things (IoT) is: " the...'>
+    <meta property="og:description" content='In the past few years, I have become fascinated with the Internet of Things. The idea that devices can be connected and interact with one another across a wireless network. According to Wikipedia, the internet of things (IoT) is:     " the...'>
     <meta property="og:url" content="http://localhost:2368/controlling-hue-bulbs-with-your-mobile-device/">
     <meta property="article:published_time" content="2015-03-21T20:51:08.532Z">
-    <meta property="article:modified_time" content="2015-03-21T23:06:42.696Z">
+    <meta property="article:modified_time" content="2015-04-29T19:10:19.591Z">
     
     <meta name="twitter:card" content="summary">
     <meta name="twitter:title" content="Controlling Hue Bulbs With Your Mobile Device">
-    <meta name="twitter:description" content='In the past few years, I have become fascinated with the Internet of Things. The idea that devices can be connected and interact with one another across a wireless network. According to Wikipedia, the internet of things (IoT) is: " the...'>
+    <meta name="twitter:description" content='In the past few years, I have become fascinated with the Internet of Things. The idea that devices can be connected and interact with one another across a wireless network. According to Wikipedia, the internet of things (IoT) is:     " the...'>
     <meta name="twitter:url" content="http://localhost:2368/controlling-hue-bulbs-with-your-mobile-device/">
     
     <script type="application/ld+json">
 {
     "@context": "http://schema.org",
     "@type": "Article",
-    "publisher": "Electro-Mechanical Musings",
+    "publisher": "Learn-as-you-go",
     "author": {
         "@type": "Person",
         "name": "Alexandra Robinson",
@@ -43,13 +43,13 @@
     "headline": "Controlling Hue Bulbs With Your Mobile Device",
     "url": "http://localhost:2368/controlling-hue-bulbs-with-your-mobile-device/",
     "datePublished": "2015-03-21T20:51:08.532Z",
-    "dateModified": "2015-03-21T23:06:42.696Z",
-    "description": "In the past few years, I have become fascinated with the Internet of Things. The idea that devices can be connected and interact with one another across a wireless network. According to Wikipedia, the internet of things (IoT) is: &quot; the..."
+    "dateModified": "2015-04-29T19:10:19.591Z",
+    "description": "In the past few years, I have become fascinated with the Internet of Things. The idea that devices can be connected and interact with one another across a wireless network. According to Wikipedia, the internet of things (IoT) is:     &quot; the..."
 }
     </script>
 
     <meta name="generator" content="Ghost 0.5">
-    <link rel="alternate" type="application/rss+xml" title="Electro-Mechanical Musings" href="http://localhost:2368/rss/">
+    <link rel="alternate" type="application/rss+xml" title="Learn-as-you-go" href="http://localhost:2368/rss/">
 </head>
 <body class="post-template">
 
@@ -75,29 +75,131 @@
         </header>
 
         <section class="post-content">
-            <p>In the past few years, I have become fascinated with the Internet of Things. The idea that devices can be connected and interact with one another across a wireless network. According to Wikipedia, the internet of things (IoT) is: " the network of physical objects or "things" embedded with electronics, software, sensors and connectivity to enable it to achieve greater value and service by exchanging data with the manufacturer, operator and/or other connected devices." </p>
+            <p>In the past few years, I have become fascinated with the Internet of Things. The idea that devices can be connected and interact with one another across a wireless network. According to Wikipedia, the internet of things (IoT) is:  </p>
+
+<blockquote>
+  <p>" the network of physical objects or "things" embedded with electronics, software, sensors and connectivity to enable it to achieve greater value and service by exchanging data with the manufacturer, operator and/or other connected devices." </p>
+</blockquote>
 
 <p>With this capability, the possibilites are endless! I'll admit, while this is incredibly awesome, when it comes to thinking about the security and personal privacy challenges this creates, this is a little scary!</p>
 
-<p>Nevertheless, During my time at the Turing School of Software and Design, I had the opportunitiy to take an elective about Hue Bulbs. Hue Bulbs are wireless led light bulbs manufactured by Phillips. After spending a few weeks learning about how these work. I decided to tap into the IoT and put my hacking, api, and rails skills to the test. The end goal was a simple app that will allow you to control the Hue Bulbs with your mobile device.</p>
+<p>Nevertheless, In order to feed my curiosity for the internet of things, I built an app to control wireless LED lightbulbs with my iPhone.</p>
 
-<p>For this project I used Twilio, Ruby on Rails, the 'Hue' gem and ngrok. The overall setup time was about 2 hours. Below is an outline of the steps I took to create the app. </p>
+<p>For this project I used: </p>
 
 <ul>
-<li><p>I started by generating a new rails application which I named HueBulbApp.</p></li>
-<li><p>Next I added the Hue gem in the gemfile </p></li>
-<li><p>I then generated a controller which I called 'Twilio'  and set up a route that will allow Twilio to post information to the create action on this Controller. </p></li>
-<li><p>I set up a twilio account and generated a phone number that would send an HTTP Post request via sms to my app route.</p></li>
-<li><p>The next step was to set up a ruby class that contains the code for connecting with the Hue Bulbs. I named this 'HueHandler' as its job was to handle all of the communication with the hue bulbs. I set up a method called 'response' that accepted the information from the sms as a parameter. Based on that information, the response method would then give a command to the hue bulbs. </p></li>
-<li><p>Its important to note that because of the sometimes intermittent wireless connection, it was important to rescue any connection errors when trying to connect with the hue bulbs. Without doing this, the app would break immediately if it was unable to connect to the bulb router. </p></li>
-<li><p>I then setup the create action of the twilio controller to call the HueHandler Response method passing in the params which is the infromation coming in from the sms message via Twilio. </p></li>
-<li><p>Lastly, because this is a small sample app, I used Ngrok to expose my app to the web in order recieve the information coming in from Twilio as oppsed to using a cloud application platform such as Heroku. </p></li>
-<li><p>In the end, the HueBulbApp was capable of communicating with Hue bulbs in 2 ways: </p>
-
-<ol><li>Turning the bulbs on and off by texting "on"  or "off" to the twilio number </li>
-<li>Changing the bulb hue, i.e. turing the color to green, pink or blue by texting "Pink", "Blue", or "Green".</li></ol></li>
-<li><p>All of the code can be found at: <a href="https://github.com/scottalexandra/HueBulpApp">https://github.com/scottalexandra/HueBulpApp</a></p></li>
+<li>Twilio, </li>
+<li>Ruby on Rails, </li>
+<li>The 'Hue' gem</li>
+<li>Ngrok</li>
+<li>My iPhone</li>
 </ul>
+
+<p>The overall setup time was about 2 hours. Below is an outline of the steps I took to create the app. </p>
+
+<p>I started by generating a new rails application from the terminal which I named HueBulbApp.</p>
+
+<pre><code>Rails New HueBulbApp  
+</code></pre>
+
+<p>Next I added the Hue gem in the gemfile  </p>
+
+<pre><code>gem 'hue'  
+</code></pre>
+
+<p>I then created a controller from the terminal called 'Twilio' </p>
+
+<pre><code>Rails generate controller Twilio  
+</code></pre>
+
+<p>Next I made a create action within the controller. </p>
+
+<pre><code>class TwilioController &lt; ApplicationController  
+  def create
+  end
+end  
+</code></pre>
+
+<p>Inside of config/routes.rb I set up a route that will allow Twilio to post information to the create action on this Controller. </p>
+
+<pre><code>resources :twilio, only: [:create]  
+</code></pre>
+
+<p>After configuring my rails app, I set up a <a href="https://www.twilio.com/" title="twilio">twilio</a> account. As part of this setup, I generated a phone number that would send an HTTP Post request via sms to my app route.</p>
+
+<p>The next step was to set up a plain old ruby class that contains the code for connecting with the Hue Bulbs.  </p>
+
+<pre><code>class HueHandler  
+end  
+</code></pre>
+
+<p>I named this 'HueHandler' as its job was to handle all of the communication with the hue bulbs. </p>
+
+<p>I set up a method called 'response' that accepts the information from the sms as a parameter. Based on that information, the response method gives a command to the hue bulbs. </p>
+
+<pre><code>class HueHandler  
+  def self.response(body)
+  lights = client.lights[7]
+  client.lights.each do |light|
+      case
+      when body == "On"
+        light.on = true
+      when body == "Off"
+        light.on = false
+      when body == "Pink"
+        light.hue = 56100
+      when body == "Green"
+        light.hue = 36210
+      when body == "Red"
+        light.hue == 65280
+      end
+    end
+  end    
+end  
+</code></pre>
+
+<p>Its important to note that because of sometimes intermittent wireless connections, it is important to rescue any connection errors when trying to connect with the hue bulbs.</p>
+
+<pre><code>class HueHandler  
+  def self.response(body)
+    begin
+      client = Hue::Client.new
+    rescue Hue::NoBridgeFound
+      retry
+    end
+    lights = client.lights[7]
+  client.lights.each do |light|
+      case
+      when body == "On"
+        light.on = true
+      when body == "Off"
+        light.on = false
+      when body == "Pink"
+        light.hue = 56100
+      when body == "Green"
+        light.hue = 36210
+      when body == "Red"
+        light.hue == 65280
+      end
+    end
+  end
+end  
+</code></pre>
+
+<p>I then setup the create action of the twilio controller to call the HueHandler Response method passing in the infromation coming in from the sms message via Twilio.</p>
+
+<pre><code>class TwilioController &lt; ApplicationController  
+  def create
+    HueHandler.response(params[:Body])
+  end
+end  
+</code></pre>
+
+<p>Lastly, because this is a small sample app, I used <a href="https://ngrok.com/" title="ngrok">ngrok</a> to expose my app to the web in order recieve the information coming in from Twilio as oppsed to using a cloud application platform such as Heroku. </p>
+
+<p>After only a few hours, I was able to turn the lights on, off, and change the hue by texting "on", "off", "pink" "green", and "red".</p>
+
+<p>All of the code can be found at: <a href="https://github.com/scottalexandra/HueBulpApp">https://github.com/scottalexandra/HueBulpApp</a></p>
         </section>
 
         <footer class="post-footer">
@@ -137,13 +239,13 @@
 
 
     <footer class="site-footer clearfix">
-         <section class="copyright"><a href="../">Electro-Mechanical Musings</a> © 2015</section>
+         <section class="copyright"><a href="../">Learn-as-you-go</a> © 2015</section>
          <section class="poweredby">Proudly published with <a href="https://ghost.org">Ghost</a></section>
     </footer>
 
-    <script src="../public/jquery.js?v=1a474d6cfc"></script>
+    <script src="../public/jquery.js?v=b702be1f6f"></script>
 
-    <script type="text/javascript" src="../assets/js/jquery.fitvids.js?v=1a474d6cfc"></script>
-    <script type="text/javascript" src="../assets/js/index.js?v=1a474d6cfc"></script>
+    <script type="text/javascript" src="../assets/js/jquery.fitvids.js?v=b702be1f6f"></script>
+    <script type="text/javascript" src="../assets/js/index.js?v=b702be1f6f"></script>
 
 </body>
